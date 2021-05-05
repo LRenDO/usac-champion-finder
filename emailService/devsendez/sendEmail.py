@@ -6,7 +6,7 @@
 #            https://www.youtube.com/watch?v=JRCJ6RtE3xU
 # ----------------------------------------------------------------------------
 import smtplib, ssl
-from mcred import address, user, pwd
+from devsendez.mcred import address, user, pwd
 from email.message import EmailMessage
 
 

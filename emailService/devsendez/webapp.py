@@ -5,7 +5,7 @@
 # ----------------------------------------------------------------------------
 
 #from flask import Flask, request, redirect
-from sendEmail import sendEmail
+from devsendez.sendEmail import sendEmail
 
 
 
