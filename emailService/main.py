@@ -5,4 +5,4 @@
 #               an HTTP post request in JSON format.
 # ----------------------------------------------------------------------------
 #Run Email Service Web App
-import devsendez.webapp
+from devsendez.webapp import webapp
