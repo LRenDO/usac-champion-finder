@@ -30,7 +30,7 @@ def sendEmail(recipient, senderName, senderEmail, subject, text, html=None):
     server = smtplib.SMTP(address, port)
     
     #Create EmailMessage Object 
-    footer = f'This message was sent by Dev Send EZ on behalf of {senderName} at {senderEmail}'
+    footer = f'\n\nThis message was sent by Dev Send EZ on behalf of {senderName} at {senderEmail}'
     htmlFooter = f'This message was sent by Dev Send EZ on behalf of {senderName} at <a href="mailto:{senderEmail}">{senderEmail}</a>'
     message = EmailMessage()
     message['To'] = recipient

@@ -5,12 +5,12 @@
 #              Data sent should be in JSON and must have the following
 #              attributes: recipient, senderName,senderEmail, subject, text, 
 #              html
-# Source: https://www.digitalocean.com/community/tutorials/processing-incoming-request-data-in-flask
+# Sources: https://www.digitalocean.com/community/tutorials/processing-incoming-request-data-in-flask
+#          https://stackoverflow.com/questions/45412228/sending-json-and-status-code-with-a-flask-response
 # ----------------------------------------------------------------------------
 
-from flask import Flask, request, redirect
+from flask import Flask, request, redirect, jsonify
 from devsendez.sendEmail import sendEmail
-import json
 
 webapp = Flask(__name__)
 
@@ -22,7 +22,14 @@ def prepSend():
     print(data) #DELETE
 
     #Send Email
-    sendEmail(data['recipient'], data['senderName'], data['senderEmail'], data['subject'], data['text'], data['html'])
-    #DELETE sendEmail('demeisol@oregonstate.edu', 'me', 'test@test.com', 'testing', 'test message body', "<!DOCTYPE html><html><body><h1>Test Header</h1></body></html>")
+    if 'html' in data:
+        isSent = sendEmail(data['recipient'], data['senderName'], data['senderEmail'], data['subject'], data['text'], data['html'])
+    else:
+        isSent = sendEmail(data['recipient'], data['senderName'], data['senderEmail'], data['subject'], data['text'])
     
-    return ('it worked')
+    response = {'Status':'error'}
+    
+    if isSent:
+        response = {'Status':'sent'}        
+    
+    return jsonify(response)
