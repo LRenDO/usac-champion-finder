@@ -16,20 +16,22 @@ webapp = Flask(__name__)
 
 @webapp.route('/', methods=['POST'])
 def prepSend():
-    #print(request)
     #Process Request Data
     data = request.get_json()
-    print(data) #DELETE
-
-    #Send Email
-    if 'html' in data:
-        isSent = sendEmail(data['recipient'], data['senderName'], data['senderEmail'], data['subject'], data['text'], data['html'])
-    else:
-        isSent = sendEmail(data['recipient'], data['senderName'], data['senderEmail'], data['subject'], data['text'])
-    
+    isSent = False
     response = {'Status':'error'}
+
+    if 'recipient' in data and 'senderName' in data and 'senderEmail' in data and 'subject' in data and 'text' in data:
+        #Send Email
+        if 'html' in data:
+            isSent = sendEmail(data['recipient'], data['senderName'], data['senderEmail'], data['subject'], data['text'], data['html'])
+        else:
+            isSent = sendEmail(data['recipient'], data['senderName'], data['senderEmail'], data['subject'], data['text'])
+    else:    
+        response = {'Status':'invalid request format error'}
     
     if isSent:
-        response = {'Status':'sent'}        
+        response = {'Status':'sent'}  
+    
     
     return jsonify(response)

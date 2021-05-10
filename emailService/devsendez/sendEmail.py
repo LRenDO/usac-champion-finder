@@ -52,7 +52,6 @@ def sendEmail(recipient, senderName, senderEmail, subject, text, html=None):
       
     except Exception as e:
         isSent=False
-        print(e)
     
     finally: 
         server.quit()    
