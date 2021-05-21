@@ -2,6 +2,7 @@
 # Results Class
 # Author: Ren Demeis-Ortiz
 # Description: This file contains the ResultsFrame class definitions.
+# Sources:https://www.youtube.com/playlist?list=PL6gx4Cwl9DGBwibXFtPtflztSNPGuIB_d
 # ----------------------------------------------------------------------------
 from tkinter import *
 
@@ -9,15 +10,19 @@ class ResultsFrame:
     '''
     Builds tkinter frame to display results
     
-    Attributes: results (list), main (tkinter object)
+    Parameters: results (list), main (tkinter object)
     '''
 
-    def __init__(self, results, main):
+    def __init__(self, results, year, main):
         self.bouldering = {'Female': results[0], 'Male': results[1]}
         self.sport = {'Female': results[2], 'Male': results[3]}
         self.speed = {'Female': results[4], 'Male': results[5]}
+        self.year = str(year)
         self.main = main
         self.frame = Frame(main)
+        
+        # Title Frame
+        self.titleFrame = Frame(main)
         
         # Column Frames
         frameAtts = {'bg':'white', 'bd':1}
@@ -28,6 +33,7 @@ class ResultsFrame:
         # Labels
         headAtts = {'font':('Arial',12),  'bg':'blue', 'fg':'white', 'width':40}
         labelAtts = {'font':('Arial',10),  'bg':'blue', 'fg':'white', 'width':40}
+        self.resultsTitle = Label(self.titleFrame, text = 'Results for '+self.year, font=('Arial',20),  bg='gray', fg='white')
         self.left = Label(self.leftFrame, text='Bouldering', **headAtts)
         self.center = Label(self.centerFrame, text='Sport', **headAtts)
         self.right = Label(self.rightFrame, text='Speed', **headAtts)
@@ -38,15 +44,19 @@ class ResultsFrame:
         self.right1 = Label(self.rightFrame, text = self.speed['Female'], **labelAtts)
         self.right2 = Label(self.rightFrame, text = self.speed['Male'], **labelAtts)
 
-    def update(self, results, main):
+    def update(self, results, year, main):
         '''
         Updates Attributes
         '''        
         self.bouldering = {'Female': results[0], 'Male': results[1]}
         self.sport = {'Female': results[2], 'Male': results[3]}
         self.speed = {'Female': results[4], 'Male': results[5]}
+        self.year = str(year)
         self.main = main
         self.frame = Frame(main)
+        
+        # Title Frame
+        self.titleFrame = Frame(main)
         
         # Column Frames
         frameAtts = {'bg':'white', 'bd':1}
@@ -57,6 +67,7 @@ class ResultsFrame:
         # Labels
         headAtts = {'font':('Arial',12),  'bg':'blue', 'fg':'white', 'width':40}
         labelAtts = {'font':('Arial',10),  'bg':'blue', 'fg':'white', 'width':40}
+        self.resultsTitle = Label(self.titleFrame, text = 'Results for '+self.year, font=('Arial',20),  bg='gray', fg='white')
         self.left = Label(self.leftFrame, text='Bouldering', **headAtts)
         self.center = Label(self.centerFrame, text='Sport', **headAtts)
         self.right = Label(self.rightFrame, text='Speed', **headAtts)
@@ -71,6 +82,8 @@ class ResultsFrame:
         '''
         Removes Frame
         '''
+        self.resultsTitle.pack_forget()
+        self.titleFrame.pack_forget()
         self.left.pack_forget()
         self.left1.pack_forget()
         self.left2.pack_forget()
@@ -89,6 +102,8 @@ class ResultsFrame:
         Packs sections into main
         '''
         resultArgs = {'side':'top', 'fill':'x'}
+        self.resultsTitle.pack(**resultArgs)
+        self.titleFrame.pack(**resultArgs)
         self.left.pack(side='top')
         self.left1.pack(**resultArgs)
         self.left2.pack(**resultArgs)

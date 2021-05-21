@@ -7,87 +7,69 @@
 # Sources:https://www.youtube.com/playlist?list=PL6gx4Cwl9DGBwibXFtPtflztSNPGuIB_d
 # ----------------------------------------------------------------------------
 from tkinter import *
-from usacChampionFinder.Query import Query
 from usacChampionFinder.functions import *
-from usacChampionFinder.ResultsFrame import ResultsFrame
+from usacChampionFinder.HelpBox import HelpBox
     
-years = createYearList(2004,2020)
 
-def topSearch(selection, main, resultDisp=None):
-    print('Sending Requests')
+
+def app():
+    print('in app')
+    # -----------
+    # Set Up Window and Frames
+    # -----------
+    years = createYearList(2004,2020)
+    root = Tk()
+    #root.config(bg='white')
+    topFrame = Frame(root, bg='white')
+    bottomFrame = Frame(root, bg='gray', pady =20)
+    resultDisp = topSearch(years[len(years)-1], topFrame)
+
+    # -----------
+    # Title
+    # -----------
+    titleBar = Label(root, text = 'USA Climbing Champion Finder', font=('Arial','40'), pady=20, padx=50)
     
-    #Prepare Arguments
-    event = ['Bouldering Open National Championships', 'Sport Lead Open National Championships', 'Speed Open National Championships']
-    category = ['Female', 'Male']
-    args = []
-    for i in range(len(event)):
-        for j in range(len(category)):
-            args.append({'event':event[i], 'category': category[j], 'year':selection})
-    print('list of queries: ',args)#DELETE
+    # -----------
+    # Search Section
+    # -----------
+    leftSide = Label(bottomFrame, text = 'Find Champion by Year:', font=('Arial',14),  justify='right', bg='gray', fg='white')
+
+
+    #Dropdown Menu
+    #Sources: https://www.geeksforgeeks.org/dropdown-menus-tkinter/
+    #         https://www.delftstack.com/howto/python-tkinter/how-to-create-dropdown-menu-in-tkinter/
+    selection = StringVar()
+    selection.set('Choose a Year')
+    dropdown = OptionMenu(bottomFrame, selection, *years)
+    dropdown.config(bg='white', width=20)
+    dropdown['menu'].config(bg='white')
+
+    #Help Box
+    #Source: https://stackoverflow.com/questions/4174575/adding-padding-to-a-tkinter-widget-only-on-one-side
+    text = ''
+    with open('usacChampionFinder/yearHelp.txt') as file:
+        content = file.readlines()
+    for line in content:
+        text = text + line
+    help = HelpBox(text, bottomFrame)
     
-    #Send Request
-    newQuery = Query('http://flip3.engr.oregonstate.edu:6742/api/usa-climbing', args)
-    response = newQuery.sendRequest()
-    print('\nraw results:', response) #DELETE
-    
-    #Process Results
-    results = processResults(response)
-    
-    # Display Results
-    print('resultDisp:', resultDisp) #DELETE
-    if resultDisp is not None:
-        resultDisp.end()
-        resultDisp.update(results, main)
-        resultDisp.packFrame()
-    else:
-        resultDisp = ResultsFrame(results, main)
-        resultDisp.packFrame()
-    
-    return resultDisp
+    #Top Search Button
+    topSearchB = Button(bottomFrame, text = 'Search', font=('Arial', 10), bg='red', fg='white', command= lambda: topSearch(selection.get(), topFrame, resultDisp))
 
-# -----------
-# Set Up Window and Frames
-# -----------
-root = Tk()
-#root.config(bg='white')
-topFrame = Frame(root, bg='white')
-bottomFrame = Frame(root, bg='gray', pady =20)
-resultDisp = topSearch(years[len(years)-1], topFrame)
-
-# -----------
-# Titles
-# -----------
-titleBar = Label(root, text = 'USA Climbing Champion Finder', font=('Arial','40'), pady=20, padx=50)
-resultsTitle = Label(root, text = 'Results', font=('Arial',20),  bg='gray', fg='white')
-
-# -----------
-# Search Section
-# -----------
-leftSide = Label(bottomFrame, text = 'Find Champion by Year:', font=('Arial',12),  justify='right', bg='gray', fg='white', padx=5)
+    # -----------
+    # Pack Sections and Run GUI
+    # -----------
+    titleBar.pack()
+    topFrame.pack(side='top',fill='x')
+    #leftSide.pack(side='left')
+    #dropdown.pack(side='left', padx=5)
+    leftSide.grid(row=0, column=0, padx=(10,0), sticky=N)
+    help.label.grid(row=0, column=1, pady=(0, 20), sticky=NW)
+    #help.textBox.grid(row=1, column=1, columnspan=3, pady=(0,0), padx=(0,0),sticky=NW)
+    dropdown.grid(row=0, column=2, padx=(20,10), sticky=N)
+    topSearchB.grid(row=0, column=3, padx=(15,5), sticky=N)
+    #topSearchB.pack(side='left', padx=5)
+    bottomFrame.pack(side='bottom', fill='x')
 
 
-#Dropdown Menu
-#Sources: https://www.geeksforgeeks.org/dropdown-menus-tkinter/
-#         https://www.delftstack.com/howto/python-tkinter/how-to-create-dropdown-menu-in-tkinter/
-selection = StringVar()
-selection.set('Choose a Year')
-dropdown = OptionMenu(bottomFrame, selection, *years)
-dropdown.config(bg='white')
-dropdown['menu'].config(bg='white')
-
-#Top Search Button
-topSearchB = Button(bottomFrame, text = 'Search', bg='red', fg='white', command= lambda: topSearch(selection.get(), topFrame, resultDisp))
-
-# -----------
-# Pack Sections and Run GUI
-# -----------
-titleBar.pack()
-resultsTitle.pack(side='top', fill='x')
-topFrame.pack(side='top',fill='x')
-leftSide.pack(side='left')
-dropdown.pack(side='left', padx=5)
-topSearchB.pack(side='left', padx=5)
-bottomFrame.pack(side='bottom', fill='x')
-
-
-root.mainloop()
+    root.mainloop()

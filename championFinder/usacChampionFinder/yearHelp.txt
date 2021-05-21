@@ -1,0 +1,10 @@
+Use dropdown menu to
+select a year and 
+click search. Results 
+of USA Climbing Open 
+Championship gold 
+medalists for that 
+year as recorded on 
+Wikipedia will be 
+displayed in the 
+results section above.

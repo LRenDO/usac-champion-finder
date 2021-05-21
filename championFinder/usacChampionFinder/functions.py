@@ -3,7 +3,9 @@
 # Author: Ren Demeis-Ortiz
 # Description: This file contains helper functions
 # ----------------------------------------------------------------------------
-
+import asyncio
+from usacChampionFinder.Query import Query
+from usacChampionFinder.ResultsFrame import ResultsFrame
 
 # ----------------------------------------------------------------------------
 # createYearList(start,end)
@@ -42,5 +44,45 @@ def processResults(results):
         else:
             resultsList.append(results[i]['gold'])
 
-    print(resultsList)
     return resultsList
+    
+# ----------------------------------------------------------------------------
+# topSearch(selection, main, resultDisp)
+#
+#   Parameters:
+#       selection (int) year passed for query
+#       main (frame) frame for results to be packed into
+#       resultDisp (listVar) variable where list will be stored
+#
+#   Returns: Returns list of results for each discipline and category
+# ----------------------------------------------------------------------------    
+def topSearch(selection, main, resultDisp=None):
+    print('\nSending Requests')
+    
+    #Prepare Arguments
+    event = ['Bouldering Open National Championships', 'Sport Lead Open National Championships', 'Speed Open National Championships']
+    category = ['Female', 'Male']
+    args = []
+    for i in range(len(event)):
+        for j in range(len(category)):
+            args.append({'event':event[i], 'category': category[j], 'year':selection})
+    print('list of queries: ',args)#DELETE
+    
+    #Send Request
+    newQuery = Query('http://flip3.engr.oregonstate.edu:6742/api/usa-climbing', args)
+    response = newQuery.sendRequest()
+    print('\nraw results:', response) #DELETE
+    
+    #Process Results
+    results = processResults(response)
+    
+    # Display Results
+    if resultDisp is not None:
+        resultDisp.end()
+        resultDisp.update(results, selection, main)
+        resultDisp.packFrame()
+    else:
+        resultDisp = ResultsFrame(results, selection, main)
+        resultDisp.packFrame()
+    
+    return resultDisp

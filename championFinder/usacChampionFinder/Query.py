@@ -2,8 +2,10 @@
 # Query Class
 # Author: Ren Demeis-Ortiz
 # Description: This file contains the Query class definitions.
+# Sources: https://www.youtube.com/watch?v=nFn4_nA_yk8
 # ----------------------------------------------------------------------------
-import requests
+import asyncio
+import aiohttp
 
 class Query:
     '''
@@ -20,16 +22,37 @@ class Query:
 
     def sendRequest(self):
         '''
-        Sends get request to url attribute
+        Starts async requests
     
-        Returns: isSent as true if email is sent.
-    
-        Sources: https://www.datacamp.com/community/tutorials/making-http-requests-in-python
+        Returns: List of responses
         '''
-    
-        #For each Discipline and Category Send Request and Add to Results List
-        for i in range(len(self.args)):
-            response = requests.get(self.url, params=self.args[i])
-            self.resList.append(response.json()) 
-    
+        asyncio.run(self.__sendRequests())
+        
         return self.resList
+            
+    async def __sendRequests(self):
+        '''
+        Sends get request to url attribute
+        '''
+        async with aiohttp.ClientSession() as session:
+            tasks = self.__getTasks(session)
+            responses = await asyncio.gather(*tasks)
+            
+            for res in responses:
+                self.resList.append(await res.json())
+            
+            return
+            
+    def __getTasks(self, session):
+        '''
+        Sends get request for each set of arguments in self.args
+        
+        Returns: list of responses
+        '''
+        tasks=[]
+        
+        for i in range(len(self.args)):
+            tasks.append(session.request('get', self.url, params=self.args[i]))
+        
+        return tasks
+        

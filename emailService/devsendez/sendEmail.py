@@ -58,7 +58,3 @@ def sendEmail(recipient, senderName, senderEmail, subject, text, html=None):
     
     return isSent
     
-# To Do
-# Try try/except
-# Try using enviornment variables instead of cred file
-# Try using API for 

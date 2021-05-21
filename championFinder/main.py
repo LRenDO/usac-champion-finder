@@ -4,5 +4,10 @@
 # Description: Runs Desktop App that allows users to search for USA Climbing 
 #              champions.
 # ----------------------------------------------------------------------------
+from usacChampionFinder.app import app
 
-import usacChampionFinder.app
+def main():
+    app()
+
+if __name__ == '__main__':
+    main()
