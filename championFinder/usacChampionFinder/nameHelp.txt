@@ -1,0 +1,12 @@
+NAME SEARCH HELP
+
+Use "Choose a champion"
+dropdown menu to
+select a name and 
+click search. Results 
+of how many USA 
+Climbing gold medals
+the competitor has won
+in the results listed
+in Wikipedia will be
+displayed.

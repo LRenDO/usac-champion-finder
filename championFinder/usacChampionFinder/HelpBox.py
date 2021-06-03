@@ -11,7 +11,10 @@ class HelpBox:
     Creates a small label with question mark that shows a box with text on
         mouse hover.
     
-    Parameters: text (str), main (Frame object)
+    Parameters: 
+        text (str) that is going to displayed in help box
+        main (Frame object) frame that the help box label is going to be placed in
+        row (int) that the help box is placed in
     '''
 
     def __init__(self, text, main):
@@ -29,7 +32,7 @@ class HelpBox:
         '''
         Adds box with text on mouse hover
         '''
-        self.textBox.grid(row=0, column=1, columnspan=3, pady=(20,0), padx=(0,0),sticky=NW)
+        self.textBox.grid(row=3, column=2, sticky=W)
         
     def __onLeave(self, event):
         '''

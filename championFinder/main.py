@@ -5,9 +5,13 @@
 #              champions.
 # ----------------------------------------------------------------------------
 from usacChampionFinder.app import app
-
+from usacChampionFinder.functions import processData
+    
 def main():
-    app()
+    dataByYear = {}
+    goldList = {}
+    processData(goldList, dataByYear)
+    app(goldList)
 
 if __name__ == '__main__':
     main()

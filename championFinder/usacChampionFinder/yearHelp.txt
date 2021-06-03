@@ -1,4 +1,7 @@
-Use dropdown menu to
+YEAR SEARCH HELP
+
+Use "Choose a Year"
+dropdown menu to
 select a year and 
 click search. Results 
 of USA Climbing Open 

@@ -10,23 +10,19 @@
 # ----------------------------------------------------------------------------
 
 from flask import Flask, request, redirect, jsonify
-from devsendez.sendEmail import sendEmail
+from devsendez.functions import *
 
 webapp = Flask(__name__)
 
 @webapp.route('/', methods=['POST'])
 def prepSend():
-    #Process Request Data
     data = request.get_json()
     isSent = False
     response = {'Status':'error'}
 
-    if 'recipient' in data and 'senderName' in data and 'senderEmail' in data and 'subject' in data and 'text' in data:
-        #Send Email
-        if 'html' in data:
-            isSent = sendEmail(data['recipient'], data['senderName'], data['senderEmail'], data['subject'], data['text'], data['html'])
-        else:
-            isSent = sendEmail(data['recipient'], data['senderName'], data['senderEmail'], data['subject'], data['text'])
+    if isValidData(data):
+         isSent = sendEmail(data)
+
     else:    
         response = {'Status':'invalid request format error'}
     
