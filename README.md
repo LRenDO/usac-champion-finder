@@ -23,18 +23,22 @@ on how to use the API.
 Send a POST request with The http://flip1.engr.oregonstate.edu:9584/
 
 ### JSON POST Request Example:
-```{  
+```
+{  
   "recipient": "devsendez@gmail.com",  
   "senderName": "me",  
   "senderEmail": "test@email.com",  
   "subject": "Test Subject",  
   "text": "words and things and words",  
   "html": "<!DOCTYPE html><html><body><h1>Test Header</h1></body></html>"  
-}```
+}
+```
 
 *HTML is optional.*
 
 ### JSON Response Example:
-```{"Status":"sent"}  
+```
+{"Status":"sent"}  
 {"Status":"error"}  
-{'Status':'invalid request format error'}```
+{'Status':'invalid request format error'}
+```
