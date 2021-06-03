@@ -49,23 +49,20 @@ def getGoldMedalists(results):
     return resultsList
     
   
-def yearSearch(selection, main, resultDisp=None):
+def yearSearch(selection, medalists, main, resultDisp=None):
     '''
-    Sends query and processes and displays results of search by year function
+    Displays champions of selected year
     
     Parameters:
         selection (int) year passed for query
+        medalists (list of dicts) all medalists for year selected
         main (frame) parent frame for resultDisp to be packed into
         resultDisp (frame) frame for results to be packed into
 
     Returns: Returns frame that results are displayed in
     '''
     
-    args = prepQueryArgs(selection)
-    newQuery = Query('http://flip3.engr.oregonstate.edu:6742/api/usa-climbing', args)
-    response = newQuery.sendRequest()
-    
-    results = getGoldMedalists(response)
+    results = getGoldMedalists(medalists[selection])
 
     if resultDisp is not None:
         resultDisp = displayYearResults(results, selection, main, resultDisp)

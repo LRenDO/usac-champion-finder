@@ -10,7 +10,7 @@ from tkinter import *
 from usacChampionFinder.functions import *
 from usacChampionFinder.HelpBox import HelpBox
 
-def app(goldList):
+def app(goldList, dataByYear):
     # -----------
     # Set Up Window and Frames
     # -----------
@@ -19,7 +19,7 @@ def app(goldList):
     topFrame = Frame(root, bg='gray')
     bottomFrame = Frame(root, bg='gray', pady =20, height=400)
     years = createYearList(2004,2020)  # List of years to check
-    resultDisp = yearSearch(years[len(years)-1], topFrame)  # Results frame object
+    resultDisp = yearSearch(years[len(years)-1], dataByYear, topFrame)  # Results frame object
     medalFrame = Frame(topFrame, bg='gray')  # Frame with medal results
     titleBar = Label(root, text = 'USA Climbing Champion Finder', font=('Arial','40'), pady=20, padx=50)
     
@@ -47,7 +47,7 @@ def app(goldList):
         text = text + line
     help = HelpBox(text, bottomFrame)
     
-    topSearchB = Button(bottomFrame, text = 'Search', font=('Arial', 10), bg='red', fg='white', command= lambda: yearSearch(selection.get(), topFrame, resultDisp))
+    topSearchB = Button(bottomFrame, text = 'Search', font=('Arial', 10), bg='red', fg='white', command= lambda: yearSearch(int(selection.get()), dataByYear, topFrame, resultDisp))
 
     # -----------
     # Name Search Section

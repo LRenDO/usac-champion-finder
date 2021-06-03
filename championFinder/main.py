@@ -11,7 +11,7 @@ def main():
     dataByYear = {}
     goldList = {}
     processData(goldList, dataByYear)
-    app(goldList)
+    app(goldList, dataByYear)
 
 if __name__ == '__main__':
     main()
