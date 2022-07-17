@@ -20,7 +20,7 @@ on how to use the API.
 
 
 ### API Server (POST Request)
-Send a POST request with the below JSON format to http://flip1.engr.oregonstate.edu:9584/
+Send a POST request with the below JSON format to server (previously http://flip1.engr.oregonstate.edu:9584/)
 
 ### JSON POST Request Example:
 ```
